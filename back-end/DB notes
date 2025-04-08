@@ -1,0 +1,28 @@
+DB Models
+
+Users
+-------
+id
+username
+password
+isAdmin
+isAuthor
+- Posts []
+- Comments []
+
+Posts
+-------
+id
+title
+content
+isPublished
+timePublished
+- author (related to User.id)
+
+Comments
+--------
+id
+content
+timePublished
+- author (related to Users.id)
+- post id (related to Posts.id)
