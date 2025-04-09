@@ -27,8 +27,8 @@ async function loginPost(req, res) {
                             {expiresIn: 60 * 60}
                         )
 
-        req.token = token
-        console.log(req.token);
+        req.token = token;
+        // So, it's up to the client/front-end to include the header in the format: "Authorization: Bearer ${token}", then the server verifies by decoupling and using jwt.verify!
 
         res.json({
             message: "Successfully logged in!",
@@ -38,13 +38,24 @@ async function loginPost(req, res) {
 }
 
 function postPageGet(req, res) {
-    jwt.verify(req.token, "megasecretkey", (err, decoded) => {
+     // The client/front-end has to include the header: "Authorization: Bearer ${token}", then the server verifies by decoupling and using jwt.verify!
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) {
+        res.status(401).send("No auth header");
+    }
+    // Should be in format "Bearer ${token}" so...
+    const bearerArray = authHeader.split(" ");
+    const bearerToken = bearerArray[1];
+    // now we have our token from the client, we can run it in the verify function
+    // jwt verify can return the user's data in the callback
+    jwt.verify(bearerToken, "megasecretkey", (err, decoded) => {
         if (err) {
             console.log(err);
             res.status(401).send(err)
         }
+        console.log("Post page accessed!")
+        res.json(decoded)
     });
-    res.json("Successfully accessed posts page")
 }
 
 async function postPagePost(req, res) {
