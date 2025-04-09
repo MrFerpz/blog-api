@@ -88,11 +88,11 @@ async function postGet(req, res) {
 }
 
 async function commentPost(req, res) {
-    const comment = req.body.content;
+    const content = req.body.content;
     const postID = req.params.postID;
     const userID = req.user.id;
 
-    await prisma.newComment(comment, postID, userID);
+    await prisma.newComment(content, postID, userID);
     res.json("Comment successfully posted");
 }
 

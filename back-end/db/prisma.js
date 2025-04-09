@@ -31,8 +31,29 @@ async function newPost(title, content, userID) {
     })
 }
 
+async function findPost(postID) {
+    const post = await prisma.posts.findFirst({
+        where: {
+            id: postID
+        }
+    })
+    return post
+}
+
+async function newComment(content, postID, userID) {
+    await prisma.comments.create({
+        data: {
+            content: content,
+            postID: postID,
+            userID: userID
+        }
+    })
+}
+
 module.exports = {
     newUser,
     findUser,
-    newPost
+    newPost,
+    findPost,
+    newComment
 }
