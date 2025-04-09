@@ -37,25 +37,57 @@ async function loginPost(req, res) {
     }
 }
 
-function postPageGet(req, res) {
+function checkToken(req, res, next) {
      // The client/front-end has to include the header: "Authorization: Bearer ${token}", then the server verifies by decoupling and using jwt.verify!
+     const authHeader = req.headers["authorization"];
+     if (!authHeader) {
+         res.status(401).send("No auth header");
+     }
+     // Should be in format "Bearer ${token}" so...
+     const bearerArray = authHeader.split(" ");
+     const bearerToken = bearerArray[1];
+     // now we have our token from the client, we can run it in the verify function
+     // jwt verify can return the user's data in the callback
+     jwt.verify(bearerToken, "megasecretkey", (err, decoded) => {
+         if (err) {
+             console.log(err);
+             res.status(401).send(err)
+         }
+         console.log("Token verified!")
+     });
+
+     next()
+}
+
+function checkAdmin(req, res, next) {
+    // token-getting process
     const authHeader = req.headers["authorization"];
     if (!authHeader) {
-        res.status(401).send("No auth header");
+        res.status(401).send("No auth header.")
     }
-    // Should be in format "Bearer ${token}" so...
     const bearerArray = authHeader.split(" ");
     const bearerToken = bearerArray[1];
-    // now we have our token from the client, we can run it in the verify function
-    // jwt verify can return the user's data in the callback
-    jwt.verify(bearerToken, "megasecretkey", (err, decoded) => {
+    // now we have the token we can verify it and extract some user data
+    const user = jwt.verify(bearerToken, "megasecretkey", (err, decoded) => {
         if (err) {
             console.log(err);
             res.status(401).send(err)
         }
-        console.log("Post page accessed!")
-        res.json(decoded)
+        console.log("Token verified!");
+        return decoded
     });
+
+    console.log(user);
+
+    if (user.data.user.isAdmin == true) {
+        next()
+    }
+
+    else res.status(401).send("You do not have admin rights to view this page.")
+}
+
+function postPageGet(req, res) {
+    res.json("Post page")
 }
 
 async function postPagePost(req, res) {
@@ -107,6 +139,21 @@ async function commentPost(req, res) {
     res.json("Comment successfully posted");
 }
 
+async function adminPostPageGet(req, res) {
+    res.json("Admin post page accessed.")
+}
+
+async function adminPortalGet(req, res) {
+    res.json("Admin portal accessed.")
+}
+
+async function makeAdmin(req, res) {
+    const userID = Number(req.params.userID);
+    await prisma.makeAdmin(userID);
+    console.log(`${userID} has been made an admin.`);
+    res.json(`${userID} is now an admin`);
+}
+
 module.exports = {
     loginGet,
     signupGet,
@@ -115,5 +162,10 @@ module.exports = {
     postPageGet,
     postPagePost,
     postGet,
-    commentPost
+    commentPost,
+    checkAdmin,
+    checkToken,
+    adminPostPageGet,
+    adminPortalGet,
+    makeAdmin
 }

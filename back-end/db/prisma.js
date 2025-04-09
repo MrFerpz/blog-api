@@ -50,10 +50,22 @@ async function newComment(content, postID, userID) {
     })
 }
 
+async function makeAdmin(userID) {
+    await prisma.users.update({
+        where: {
+            id: userID
+        },
+        data: {
+            isAdmin: true
+        }
+    })
+}
+
 module.exports = {
     newUser,
     findUser,
     newPost,
     findPost,
-    newComment
+    newComment,
+    makeAdmin
 }
