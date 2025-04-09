@@ -21,7 +21,18 @@ async function findUser(username) {
     return user
 }
 
+async function newPost(title, content, userID) {
+    await prisma.posts.create({
+        data: {
+            title: title,
+            content: content,
+            authorID: userID
+        }
+    })
+}
+
 module.exports = {
     newUser,
-    findUser
+    findUser,
+    newPost
 }
