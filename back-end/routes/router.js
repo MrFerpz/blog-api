@@ -20,8 +20,7 @@ router.get("/posts/:postID", controller.checkToken, controller.postGet);
 router.post("/posts/:postID/comments", controller.checkToken, controller.commentPost);
 router.put("/posts/:postID/edit", controller.checkPostAuthor, controller.postPut);
 router.put("/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentPut);
-router.delete("/posts/:postID", // this needs testing but could be a cool way to do it 
- (() => {if ((controller.checkPostAuthor) || (controller.checkAdmin)) { controller.postDelete }}));
+router.delete("/posts/:postID", controller.checkPostAuthor, controller.postDelete);
 router.delete("/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentDelete)
 
 // // admin portal

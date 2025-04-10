@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
 
 function loginGet(req, res) {
-    res.json("Login page")
+    res.json("Welcome!")
 }
 
 function signupGet(req, res) {
