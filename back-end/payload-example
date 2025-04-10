@@ -1,0 +1,13 @@
+// {
+//   data: {
+//     payload: {
+//       id: 2,
+//       created_at: '2025-04-09T13:40:05.829Z',
+//       username: 'John',
+//       isAdmin: false,
+//       isAuthor: false
+//     }
+//   },
+//   iat: 1744311098,
+//   exp: 1744314698
+// }

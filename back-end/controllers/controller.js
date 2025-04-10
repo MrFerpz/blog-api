@@ -67,8 +67,8 @@ function checkToken(req, res, next) {
      next()
 }
 
-function checkAdmin(req, res, next) {
-    // token-getting process
+function userDetails(req, res) {
+    // function to decrypt the token and return the payload (user data)
     const authHeader = req.headers["authorization"];
     if (!authHeader) {
         res.status(401).send("No auth header.")
@@ -81,16 +81,17 @@ function checkAdmin(req, res, next) {
             console.log(err);
             res.status(401).send(err)
         }
-        console.log("Token verified!");
         return decoded
     });
+    return user
+}
 
+function checkAdmin(req, res, next) {
+    const user  = userDetails(req, res)
     console.log(user);
-
     if (user.data.user.isAdmin == true) {
         next()
     }
-
     else res.status(401).send("You do not have admin rights to view this page.")
 }
 
@@ -99,19 +100,16 @@ function postPageGet(req, res) {
 }
 
 async function postPagePost(req, res) {
-    jwt.verify(req.body.token, "megasecretkey", (err, decoded) => {
-        if (err) {
-            console.log(err);
-            res.status(401).send(err)
-        }
-    });
+    const user = userDetails(req, res);
+    console.log(user);
 
     const title = req.body.title;
     const content = req.body.content;
-    const authorID = req.user.id;
+    const authorID = user.data.payload.id;
 
     await prisma.newPost(title, content, authorID);
-    res.json("Successfully added a new post");
+    const allPosts = await prisma.findAllPosts();
+    res.json(allPosts);
 }
 
 async function verifyPassword(username, password) {
@@ -141,7 +139,7 @@ async function postGet(req, res) {
 async function commentPost(req, res) {
     const content = req.body.content;
     const postID = req.params.postID;
-    const userID = req.user.id;
+    const userID = userDetails(req, res).id;
 
     await prisma.newComment(content, postID, userID);
     res.json("Comment successfully posted");

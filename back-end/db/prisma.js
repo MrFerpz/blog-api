@@ -61,11 +61,17 @@ async function makeAdmin(userID) {
     })
 }
 
+async function findAllPosts() {
+    const allPosts = await prisma.posts.findMany()
+    return allPosts;
+}
+
 module.exports = {
     newUser,
     findUser,
     newPost,
     findPost,
     newComment,
-    makeAdmin
+    makeAdmin,
+    findAllPosts
 }

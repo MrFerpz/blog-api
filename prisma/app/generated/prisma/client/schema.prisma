@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "app/generated/prisma/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Comments {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  content    String?  @db.VarChar
+  authorID   Int?
+  postID     Int?
+  Users      Users?   @relation(fields: [authorID], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Posts      Posts?   @relation(fields: [postID], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Posts {
+  id          Int        @id @default(autoincrement())
+  created_at  DateTime   @default(now()) @db.Timestamptz(6)
+  title       String?    @db.VarChar
+  content     String?    @db.VarChar
+  isPublished Boolean?   @default(false)
+  authorID    Int?
+  Comments    Comments[]
+  Users       Users?     @relation(fields: [authorID], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Users {
+  id         Int        @id @default(autoincrement())
+  created_at DateTime   @default(now()) @db.Timestamptz(6)
+  username   String?    @unique @db.VarChar
+  password   String?    @db.VarChar
+  isAdmin    Boolean?   @default(false)
+  isAuthor   Boolean?   @default(false)
+  Comments   Comments[]
+  Posts      Posts[]
+}
