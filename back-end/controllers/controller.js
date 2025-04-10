@@ -130,8 +130,7 @@ async function verifyPassword(username, password) {
 }
 
 async function postGet(req, res) {
-    const postID = req.params.postID;
-
+    const postID = Number(req.params.postID);
     const post = await prisma.findPost(postID);
     res.json(post);
 }
