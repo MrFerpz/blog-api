@@ -18,11 +18,19 @@ async function signupPost(req, res) {
 
 async function loginPost(req, res) {
     const user = await verifyPassword(req.body.username, req.body.password);
-    req.user = user;
+
+    // remove password
+    const payload = { 
+        id: user.id,
+        created_at: user.created_at,
+        username: user.username,
+        isAdmin: user.isAdmin,
+        isAuthor: user.isAuthor
+    }
 
     if (user) {
         const token = jwt.sign({
-                            data: {user}}, 
+                            data: {payload}}, 
                             "megasecretkey",
                             {expiresIn: 60 * 60}
                         )
