@@ -191,6 +191,23 @@ async function checkCommentAuthor(req, res, next) {
     }
 }
 
+async function postPut(req, res) {
+    // assume that there's info in the req.body ::
+    const newTitle = req.body.title;
+    const newContent = req.body.content;
+    const postID = Number(req.params.postID);
+
+    const newPost = await prisma.editPost(postID, newTitle, newContent);
+    res.json(newPost);
+}
+
+async function commentPut(req, res) {
+    const newContent = req.body.content;
+    const commentID = Number(req.params.commentID);
+
+    const newComment = await prisma.editComment(commentID, newContent);
+    res.json(newComment)
+}
 
 module.exports = {
     loginGet,
@@ -207,5 +224,7 @@ module.exports = {
     adminPortalGet,
     makeAdmin,
     checkPostAuthor,
-    checkCommentAuthor
+    checkCommentAuthor,
+    postPut,
+    commentPut
 }

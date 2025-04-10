@@ -18,8 +18,8 @@ router.post("/posts", controller.checkToken, controller.postPagePost);
 // individual posts, can post comments
 router.get("/posts/:postID", controller.checkToken, controller.postGet);
 router.post("/posts/:postID/comments", controller.checkToken, controller.commentPost);
-// router.put("/posts/:postID/update", controller.checkIsPostAuthor, controller.postPut);
-// router.put("/posts/:postID/comments/:commentID", controller.checkIsCommentAuthor, controller.commentPut);
+router.put("/posts/:postID/edit", controller.checkPostAuthor, controller.postPut);
+router.put("/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentPut);
 
 // // admin portal
 router.post("/admin-application/:userID", controller.makeAdmin)

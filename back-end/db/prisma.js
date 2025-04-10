@@ -78,6 +78,34 @@ async function findAllPosts() {
     return allPosts;
 }
 
+async function editPost(postID, newTitle, newContent) {
+    await prisma.posts.update({
+        where: {
+            id: postID
+        },
+        data: {
+            title: newTitle,
+            content: newContent,
+            created_at: new Date().toISOString()
+        }
+    });
+
+    return findPost(postID)
+}
+
+async function editComment(commentID, newContent) {
+    await prisma.comments.update({
+        where: {
+            id: commentID
+        },
+        data: {
+            content: newContent
+        }
+    });
+
+    return findComment(commentID)
+}
+
 module.exports = {
     newUser,
     findUser,
@@ -86,5 +114,7 @@ module.exports = {
     newComment,
     makeAdmin,
     findAllPosts,
-    findComment
+    findComment,
+    editPost,
+    editComment
 }
