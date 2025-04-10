@@ -32,11 +32,15 @@ async function newPost(title, content, userID) {
 }
 
 async function findPost(postID) {
-    const post = await prisma.posts.findFirst({
+    const post = await prisma.posts.findUnique({
         where: {
             id: postID
+        },
+        include: {
+            Comments: true
         }
     })
+    console.log(post);
     return post
 }
 
@@ -45,7 +49,7 @@ async function newComment(content, postID, userID) {
         data: {
             content: content,
             postID: postID,
-            userID: userID
+            authorID: userID
         }
     })
 }

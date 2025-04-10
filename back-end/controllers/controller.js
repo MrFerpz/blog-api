@@ -136,12 +136,16 @@ async function postGet(req, res) {
 }
 
 async function commentPost(req, res) {
+    const user = userDetails(req,res)
+
     const content = req.body.content;
-    const postID = req.params.postID;
-    const userID = userDetails(req, res).id;
+    const postID = Number(req.params.postID);
+    const userID = user.data.payload.id;
 
     await prisma.newComment(content, postID, userID);
-    res.json("Comment successfully posted");
+    // then we want to return the post with all comments attached
+    const post = await prisma.findPost(postID)
+    res.json(post);
 }
 
 async function adminPostPageGet(req, res) {
