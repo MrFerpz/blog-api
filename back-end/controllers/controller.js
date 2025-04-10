@@ -209,6 +209,16 @@ async function commentPut(req, res) {
     res.json(newComment)
 }
 
+async function postDelete(req, res) {
+    const postID = Number(req.params.postID);
+    await prisma.deletePost(postID);
+}
+
+async function commentDelete(req, res) {
+    const commentID = Number(req.params.commentID);
+    await prisma.deleteComment(commentID)
+}
+
 module.exports = {
     loginGet,
     signupGet,
@@ -226,5 +236,7 @@ module.exports = {
     checkPostAuthor,
     checkCommentAuthor,
     postPut,
-    commentPut
+    commentPut,
+    postDelete,
+    commentDelete
 }

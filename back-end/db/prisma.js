@@ -106,6 +106,22 @@ async function editComment(commentID, newContent) {
     return findComment(commentID)
 }
 
+async function deleteComment(commentID) {
+    await prisma.comments.delete({
+        where: {
+            id: commentID
+        }
+    })
+}
+
+async function deletePost(postID) {
+    await prisma.posts.delete({
+        where: {
+            id: postID
+        }
+    })
+}
+
 module.exports = {
     newUser,
     findUser,
@@ -116,5 +132,7 @@ module.exports = {
     findAllPosts,
     findComment,
     editPost,
-    editComment
+    editComment,
+    deletePost,
+    deleteComment
 }
