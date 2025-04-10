@@ -95,13 +95,13 @@ function checkAdmin(req, res, next) {
     else res.status(401).send("You do not have admin rights to view this page.")
 }
 
-function postPageGet(req, res) {
-    res.json("Post page")
+async function postPageGet(req, res) {
+    const allPosts = await prisma.findAllPosts();
+    res.json(allPosts)
 }
 
 async function postPagePost(req, res) {
     const user = userDetails(req, res);
-    console.log(user);
 
     const title = req.body.title;
     const content = req.body.content;
@@ -163,6 +163,35 @@ async function makeAdmin(req, res) {
     res.json(`${userID} is now an admin`);
 }
 
+async function checkPostAuthor(req, res, next) {
+    const user = userDetails(req, res);
+    const postID = Number(req.params.postID);
+
+    const post = await prisma.findPost(postID);
+
+    if (user.data.payload.id === post.authorID) {
+        next();
+    }
+    else {
+        res.status(401).send("You are not the post's author, so you may not edit or delete it")
+    }
+}
+
+async function checkCommentAuthor(req, res, next) {
+    const user = userDetails(req, res);
+    const commentID = Number(req.params.commentID)
+
+    const comment = await prisma.findComment(commentID);
+
+    if (user.data.payload.id === comment.authorID) {
+        next();
+    }
+    else {
+        res.status(401).send("You are not the comment's author, so you may not edit or delete it")
+    }
+}
+
+
 module.exports = {
     loginGet,
     signupGet,
@@ -176,5 +205,7 @@ module.exports = {
     checkToken,
     adminPostPageGet,
     adminPortalGet,
-    makeAdmin
+    makeAdmin,
+    checkPostAuthor,
+    checkCommentAuthor
 }

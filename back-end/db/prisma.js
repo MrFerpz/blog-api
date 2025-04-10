@@ -54,6 +54,14 @@ async function newComment(content, postID, userID) {
     })
 }
 
+async function findComment(commentID) {
+    const comment = await prisma.comments.findUnique({
+        id: commentID
+    })
+
+    return comment
+}
+
 async function makeAdmin(userID) {
     await prisma.users.update({
         where: {
@@ -77,5 +85,6 @@ module.exports = {
     findPost,
     newComment,
     makeAdmin,
-    findAllPosts
+    findAllPosts,
+    findComment
 }
