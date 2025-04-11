@@ -5,7 +5,7 @@ import Footer from "./components/Footer/Footer"
 import LoginPage from './pages/LoginPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Provider } from "@/components/ui/provider"
+import { Provider } from "../../src/components/ui/provider"
 
 function App() {
 
