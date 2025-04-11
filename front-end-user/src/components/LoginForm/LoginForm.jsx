@@ -60,14 +60,6 @@ function LoginForm(message) {
                 </form>
             </Box>
         </Center>
-
-/* <form onSubmit={loginPost} id="loginform" action="/login">
-<label htmlFor="username">Username</label>
-<input id="username" name="username"></input>
-<label htmlFor="password">Password</label>
-<input id="password" type="password" name="password"></input>
-<button type="submit">Log in</button>
-</form> */
     )
 }
 
