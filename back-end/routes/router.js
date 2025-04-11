@@ -2,31 +2,30 @@ const { Router } = require('express');
 const router = Router();
 const controller = require('../controllers/controller');
 
-
 // homepage - send to login
-router.get("/", controller.loginGet)
+router.get("/api", controller.loginGet)
 
 // login & sign-up pages
-router.get("/signup", controller.signupGet);
-router.post("/signup", controller.signupPost);
-router.post("/login", controller.loginPost);
+router.get("/api/signup", controller.signupGet);
+router.post("/api/signup", controller.signupPost);
+router.post("/api/login", controller.loginPost);
 
 // post list
-router.get("/posts", controller.checkToken, controller.postPageGet);
-router.post("/posts", controller.checkToken, controller.postPagePost);
+router.get("/api/posts", controller.checkToken, controller.postPageGet);
+router.post("/api/posts", controller.checkToken, controller.postPagePost);
 
 // individual posts, can post comments
-router.get("/posts/:postID", controller.checkToken, controller.postGet);
-router.post("/posts/:postID/comments", controller.checkToken, controller.commentPost);
-router.put("/posts/:postID/edit", controller.checkPostAuthor, controller.postPut);
-router.put("/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentPut);
-router.delete("/posts/:postID", controller.checkPostAuthor, controller.postDelete);
-router.delete("/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentDelete)
+router.get("/api/posts/:postID", controller.checkToken, controller.postGet);
+router.post("/api/posts/:postID/comments", controller.checkToken, controller.commentPost);
+router.put("/api/posts/:postID/edit", controller.checkPostAuthor, controller.postPut);
+router.put("/api/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentPut);
+router.delete("/api/posts/:postID", controller.checkPostAuthor, controller.postDelete);
+router.delete("/api/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentDelete)
 
 // // admin portal
-router.post("/admin-application/:userID", controller.makeAdmin)
-router.get("/admin", controller.checkAdmin, controller.adminPortalGet)
-router.get("/admin/posts", controller.checkAdmin, controller.adminPostPageGet);
+router.post("/api/admin-application/:userID", controller.makeAdmin)
+router.get("/api/admin", controller.checkAdmin, controller.adminPortalGet)
+router.get("/api/admin/posts", controller.checkAdmin, controller.adminPostPageGet);
 // router.post("/admin/posts", controller.adminPostPagePost);
 // router.get("/admin/posts/:postID", controller.adminPostGet);
 // router.put("/admin/posts/:postID", controller.adminPostPut);
