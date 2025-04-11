@@ -1,7 +1,10 @@
 import styles from "./LoginForm.module.css"
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
-function LoginForm() {
+function LoginForm(message) {
+    // for navigating back to home after login
+    const navigate = useNavigate()
 
     async function loginPost (e) {
         e.preventDefault();
@@ -9,18 +12,25 @@ function LoginForm() {
         // take from the inputs
         const username = document.querySelector("#username").value;
         const password = document.querySelector("#password").value;
-     
-     const {data} = await axios.post("http://localhost:3000/api/login", {
-            username: username,
-            password: password
-            }, {
-            headers: {
-            'Content-Type': 'application/json'
+    
+        try {
+            const {data} = await axios.post("http://localhost:3000/api/login", {
+                    username: username,
+                    password: password
+                    }, {
+                    headers: {
+                    'Content-Type': 'application/json'
+                    }});
+                
+                console.log(data);
+                localStorage.setItem("token", data.data);
+                console.log(localStorage)
+                
+            } catch(err) {
+                console.log(err);
+                navigate("/login");
             }
-            
-        })
-        // set the token in localStorage
-        localStorage.setItem({token: data.data})
+            navigate("/");
     }
 
     return (
