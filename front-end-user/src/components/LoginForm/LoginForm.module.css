@@ -1,9 +1,0 @@
-.formContainer {
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgrey;
-    box-shadow: 2px 2px;
-}
