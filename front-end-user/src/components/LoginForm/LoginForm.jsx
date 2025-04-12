@@ -32,7 +32,7 @@ function LoginForm(message) {
                 console.log(err);
                 navigate("/login");
             }
-            navigate("/");
+            navigate("/posts");
     }
 
     return (

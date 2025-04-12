@@ -16,11 +16,11 @@ router.post("/api/posts", controller.checkToken, controller.postPagePost);
 
 // individual posts, can post comments
 router.get("/api/posts/:postID", controller.checkToken, controller.postGet);
-router.post("/api/posts/:postID/comments", controller.checkToken, controller.commentPost);
+router.post("/api/posts/:postID", controller.checkToken, controller.commentPost);
 router.put("/api/posts/:postID/edit", controller.checkPostAuthor, controller.postPut);
-router.put("/api/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentPut);
+router.put("/api/posts/:postID/:commentID", controller.checkCommentAuthor, controller.commentPut);
 router.delete("/api/posts/:postID", controller.checkPostAuthor, controller.postDelete);
-router.delete("/api/posts/:postID/comments/:commentID", controller.checkCommentAuthor, controller.commentDelete)
+router.delete("/api/posts/:postID/:commentID", controller.checkCommentAuthor, controller.commentDelete)
 
 // // admin portal
 router.post("/api/admin-application/:userID", controller.makeAdmin)

@@ -1,0 +1,35 @@
+------- TO DO ---------
+- Homepage grid
+- Add links so it goes to a post-specific page
+- Re-route so if you're not logged in you're at the log-in page
+- Add sign-up form
+- Work out how to render post-specific pages
+- Add new post and new comment functionality
+- Fine-tune the styling
+
+- Admin portal...
+------- DOING ---------
+
+------- DONE ---------
+- Extract JWT verification from PostPageGet and turn into a middleware function
+- Work out how to allow admins to certain pages and not others
+- Change payload to be without the password
+- Test database interactions - make sure posts and comment CRUDs are working
+- Install vite
+- Test an axios request
+- Work out how to store the token on front-end / local storage, after logging in
+- Work out how to send fetch requests and make sure to pass in the auth header
+- Work out how the API should communicate data for best adapatation on front-end
+    - axios response -> response.data -> map into constituent key/values
+
+--- MISC LEARNINGS ---
+- Install vite at the start to avoid problems
+- Remember to name files as jsx...
+- Host backend and frontend on different ports (make sure to install cors on backend though)
+- Put fetch into useEffects so they don't run every re-render
+
+--- Reminders for when it's tough ---
+- First time using Axios
+- First time connecting a backend and frontend
+- First time using a component library (at least properly)
+- 

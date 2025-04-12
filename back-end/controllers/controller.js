@@ -36,7 +36,7 @@ async function loginPost(req, res) {
                         )
 
         req.token = token;
-        // So, it's up to the client/front-end to include the header in the format: "Authorization: Bearer ${token}", then the server verifies by decoupling and using jwt.verify!
+        // So, later it'll be up to the client/front-end to include the header in the format: "Authorization: Bearer ${token}", then the server verifies by decoupling and using jwt.verify!
 
         res.json({
             message: "Successfully logged in!",
@@ -136,16 +136,17 @@ async function postGet(req, res) {
 }
 
 async function commentPost(req, res) {
-    const user = userDetails(req,res)
+    const user = userDetails(req, res)
 
     const content = req.body.content;
     const postID = Number(req.params.postID);
     const userID = user.data.payload.id;
 
     await prisma.newComment(content, postID, userID);
+    res.json("Success");
     // then we want to return the post with all comments attached
-    const post = await prisma.findPost(postID)
-    res.json(post);
+    // const post = await prisma.findPost(postID)
+    // res.json(post);
 }
 
 async function adminPostPageGet(req, res) {
