@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom"
-import { Box, Stack, Heading, Text, Center, Field, Input, Button, Separator, Flex } from "@chakra-ui/react"
+import { Box, Stack, Heading, Text, Grid, Center, Field, Input, Button, Separator, Flex, GridItem, StackSeparator } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 import CommentForm from "../components/CommentForm";
 import axios from "axios";
-
 
 function PostPage() {
     let params = useParams();
@@ -38,7 +37,6 @@ function PostPage() {
 }
 
 return (
-
     <div>
         <Box shadow="md" p={6} bg="blackAlpha.900">
             <Stack p={3}><Heading>{post.title}</Heading></Stack>
@@ -48,11 +46,19 @@ return (
             <Stack>Comments</Stack>
             <Stack>
                 {comments.map(comment => {
-                        return <Stack bg="gray.800" borderRadius="md" p={2} key={comment.id}>{comment.content}</Stack>
+                        return <Grid bg="gray.800" borderRadius="md" p={8} key={comment.id} gridTemplateColumns="1fr 9fr">
+                                    <Grid gap={2} gridTemplateRows="1fr 1fr">
+                                        <GridItem><Text><b>Author ID:</b> {comment.authorID}</Text></GridItem>
+                                        <GridItem><Text fontSize="0.45rem">{comment.created_at}</Text></GridItem>
+                                    </Grid>
+                                    <Text textAlign="center">{comment.content}</Text>
+                                </Grid>
                 })}
             </Stack>
             <Separator></Separator>
-            <div>{toggle ? <CommentForm/> : <Button onClick={toggleSwitch}>New Comment</Button>}</div>
+            <StackSeparator h="20px"></StackSeparator>
+            <Flex width="100%" justifyContent="center">{toggle ? <CommentForm/> : <Button marginBottom="30px" onClick={toggleSwitch}>New Comment</Button>}</Flex>
+            <StackSeparator h="20px"></StackSeparator>
         </Box>
     </div>
 )}

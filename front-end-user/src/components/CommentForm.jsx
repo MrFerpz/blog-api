@@ -1,4 +1,4 @@
-import { Field, Button, Input } from "@chakra-ui/react"
+import { Field, Button, Input, StackSeparator, Stack, Textarea, Flex } from "@chakra-ui/react"
 import { useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios";
@@ -36,18 +36,21 @@ export default function CommentForm() {
     }
 
     return (
-        <form onSubmit={submitComment}>
-        <Field.Root>
-            <Field.Label>Your comment</Field.Label>
-            <Input 
-            name="comment" 
-            id="newcomment" 
-            size="lg"
-            value={comment}
-            onChange={handleInputChange}
-            />
-        </Field.Root>
-        <Button type="submit">Submit</Button>
-        </form>
+        <Stack width="75vw">
+                <form onSubmit={submitComment}>
+                <Field.Root>
+                    <Field.Label>Your comment</Field.Label>
+                    <Textarea 
+                    name="comment" 
+                    size="xl"
+                    id="newcomment"
+                    value={comment}
+                    onChange={handleInputChange}
+                    />
+                </Field.Root>
+                <StackSeparator h="10px"></StackSeparator>
+                <Flex justifyContent="center"><Button marginBottom="30px" type="submit">Submit</Button></Flex>
+                </form>
+        </Stack>
     )
 }

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Box, Text, Grid, GridItem, Flex, Heading, HStack, Button, Separator } from '@chakra-ui/react';
-import { Link, useNavigate } from "react-router-dom"
-
+import { Link, useNavigate, useParams } from "react-router-dom"
+import LoginPage from "./LoginPage";
 
 function HomePage() {
     const [posts, setPosts] = useState([])
@@ -24,7 +24,7 @@ function HomePage() {
     useEffect(() => {
         postsGet()
             }
-    ,[])
+    ,[[], localStorage.token])
 
     if (localStorage.token) {
     return (
