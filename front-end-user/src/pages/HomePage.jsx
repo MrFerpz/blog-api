@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Box, Text, Grid, GridItem, Flex, Heading, HStack, Button, Separator } from '@chakra-ui/react';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+
 
 function HomePage() {
     const [posts, setPosts] = useState([])
     const [token, setToken] = useState(localStorage.token);
+    const navigate = useNavigate();
 
     async function postsGet() {
         const postsList = await axios.get("http://localhost:3000/api/posts",
@@ -24,6 +26,7 @@ function HomePage() {
             }
     ,[])
 
+    if (localStorage.token) {
     return (
         <section>
             <Grid templateColumns="repeat(3, 1fr)" gap="6">
@@ -38,7 +41,11 @@ function HomePage() {
                 )}
             </Grid>
         </section>
-    )
+    )}
+
+    else {
+        navigate("/login")
+    }
 }
 
 export default HomePage

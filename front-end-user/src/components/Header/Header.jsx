@@ -1,4 +1,5 @@
 import { Box, Flex, Heading, HStack, Button } from '@chakra-ui/react';
+import { Link } from "react-router-dom"
 
 const Header = () => {
   return (
@@ -6,9 +7,9 @@ const Header = () => {
       <Flex align="center" justify="space-between">
         <Heading size="2xl">Devpreneurs</Heading>
         <HStack spacing={4}>
-          <Button size="lg" variant="solid" colorPalette="blue">Home</Button>
-          <Button size="lg"variant="solid" colorPalette="blue">Profile</Button>
-          <Button size="lg" variant="solid" colorPalette="blue">Log Out</Button>
+          <Link to="/"><Button size="lg" variant="solid" colorPalette="blue">Home</Button></Link>
+          <Link to="/posts"><Button size="lg"variant="solid" colorPalette="blue">Posts</Button></Link>
+          <Button size="lg" variant="solid" colorPalette="blue">Profile</Button>
         </HStack>
       </Flex>
     </Box>

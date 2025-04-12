@@ -15,9 +15,10 @@ function App() {
             <Provider>
                 <Header/>
                     <Routes>
-                        <Route path="posts" element={<HomePage/>}/>
-                        <Route path="login" element={<LoginPage/>}/>
-                        <Route path="posts/:postID" element={<PostPage/>}/>
+                        <Route path="/" element={<HomePage/>}/>
+                        <Route path="/posts" element={<HomePage/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/posts/:postID" element={<PostPage/>}/>
                     </Routes>
                 <Footer/>
             </Provider>
