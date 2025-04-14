@@ -93,8 +93,8 @@ function userDetailsJson(req, res) {
 
 function checkAdmin(req, res, next) {
     const user = userDetails(req, res)
-    console.log(user + "HEEEY")
-    if (user.isAdmin == true) {
+    console.log(user)
+    if (user.data.isAdmin == true) {
         next()
     }
     else res.status(401).send("You do not have admin rights to view this page.")
@@ -226,7 +226,8 @@ async function commentDelete(req, res) {
 }
 
 async function getAllUsers(req, res) {
-    const users = await prisma.getAllUsers();
+    const users = await prisma.findAllUsers();
+    console.log(users);
     res.json(users);
 }
 
@@ -235,6 +236,7 @@ async function adminLoginPost(req, res) {
     if (!user.isAdmin) {
         res.status(401).send("Not an admin.");
     }
+    
     else {
         // remove password
     const payload = { 
@@ -259,6 +261,12 @@ async function adminLoginPost(req, res) {
         }
     }
 
+async function deleteUser(req, res) {
+    const userID = Number(req.params.userID);
+    await prisma.deleteUser(userID)
+}
+
+
 module.exports = {
     loginGet,
     signupGet,
@@ -281,5 +289,6 @@ module.exports = {
     commentDelete,
     userDetailsJson,
     getAllUsers,
-    adminLoginPost
+    adminLoginPost,
+    deleteUser
 }

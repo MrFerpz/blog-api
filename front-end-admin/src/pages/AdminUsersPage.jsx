@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { Flex, Table, Button, TableBody } from "@chakra-ui/react"
+import { Flex, Table, Button, TableBody, StackSeparator } from "@chakra-ui/react"
+import { Link } from "react-router-dom"
 
 export default function AdminUsersPage() {
     const [usersList, setUsersList] = useState([]);
@@ -16,43 +17,57 @@ export default function AdminUsersPage() {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + localStorage.token
         }});
-
+        console.log(users.data);
         setUsersList(users.data);
 
     } catch(err) {
         console.log(err)
     }}
 
-    if (!usersList) {
+    if (usersList.length < 1) {
         return (
             <div>Loading...</div>
         )
     }
 
+    async function deleteUser(id) {
+        await axios.delete(`http://localhost:3000/api/admin/users/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.token
+            }});
+
+        window.location.href = window.location.href;
+    }
+
     return (
-        <Table.Root size="md">
-                    <TableBody>
-                        <Table.Row>
-                            <Table.ColumnHeader>User ID</Table.ColumnHeader>
-                            <Table.ColumnHeader>Username</Table.ColumnHeader>
-                            <Table.ColumnHeader>Account created at</Table.ColumnHeader>
-                            <Table.ColumnHeader>Author status</Table.ColumnHeader>
-                            <Table.ColumnHeader>Admin status</Table.ColumnHeader>
-                            <Table.ColumnHeader>Delete?</Table.ColumnHeader>
-                            <Table.ColumnHeader>Edit?</Table.ColumnHeader>
+        <Flex flexDirection="column" justifyContent="center" alignItems="center" height="100vh">
+            <Table.Root size="md">
+                <TableBody>
+                    <Table.Row>
+                        <Table.ColumnHeader>User ID</Table.ColumnHeader>
+                        <Table.ColumnHeader>Username</Table.ColumnHeader>
+                        <Table.ColumnHeader>Account created at</Table.ColumnHeader>
+                        <Table.ColumnHeader>Author status</Table.ColumnHeader>
+                        <Table.ColumnHeader>Admin status</Table.ColumnHeader>
+                        <Table.ColumnHeader>Delete</Table.ColumnHeader>
+                        <Table.ColumnHeader>Edit</Table.ColumnHeader>
+                    </Table.Row>
+                    {usersList.map(user => 
+                        <Table.Row key={user.id}>
+                            <Table.Cell>{user.id}</Table.Cell>
+                            <Table.Cell>{user.username}</Table.Cell>
+                            <Table.Cell>{user.created_at}</Table.Cell>
+                            <Table.Cell>{user.isAuthor.toString()}</Table.Cell>
+                            <Table.Cell>{user.isAdmin.toString()}</Table.Cell>
+                            <Table.Cell><Button id={user.id} onClick={(e) => deleteUser(user.id)} color="white" bg="red.800">Delete User</Button></Table.Cell>
+                            <Table.Cell><Button color="white" bg="green.800">Edit User</Button></Table.Cell>
                         </Table.Row>
-                        {usersList.map(user => {
-                            <Table.Row key={user.id}>
-                                <Table.Cell>{user.id}</Table.Cell>
-                                <Table.Cell>{user.username}</Table.Cell>
-                                <Table.Cell>{user.created_at}</Table.Cell>
-                                <Table.Cell>{user.isAuthor.toString()}</Table.Cell>
-                                <Table.Cell>{user.isAdmin.toString()}</Table.Cell>
-                                <Table.Cell><Button bg="red.800">Delete User</Button></Table.Cell>
-                                <Table.Cell><Button bg="green.800">Edit User</Button></Table.Cell>
-                            </Table.Row>
-                        })}
-                    </TableBody>
-                </Table.Root>
+                    )}
+                </TableBody>
+            </Table.Root>
+            <StackSeparator h="20px"></StackSeparator>
+            <Link to="/"><Button>Go back</Button></Link>
+        </Flex>
     )
 }
