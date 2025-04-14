@@ -9,6 +9,10 @@ router.get("/api", controller.loginGet)
 router.get("/api/signup", controller.signupGet);
 router.post("/api/signup", controller.signupPost);
 router.post("/api/login", controller.loginPost);
+router.post("/api/admin/login", controller.adminLoginPost);
+
+// profile
+router.get("/api/profile", controller.checkToken, controller.userDetailsJson); 
 
 // post list
 router.get("/api/posts", controller.checkToken, controller.postPageGet);
@@ -26,6 +30,7 @@ router.delete("/api/posts/:postID/:commentID", controller.checkCommentAuthor, co
 router.post("/api/admin-application/:userID", controller.makeAdmin)
 router.get("/api/admin", controller.checkAdmin, controller.adminPortalGet)
 router.get("/api/admin/posts", controller.checkAdmin, controller.adminPostPageGet);
+router.get("/api/admin/users", controller.checkAdmin, controller.getAllUsers);
 // router.post("/admin/posts", controller.adminPostPagePost);
 // router.get("/admin/posts/:postID", controller.adminPostGet);
 // router.put("/admin/posts/:postID", controller.adminPostPut);

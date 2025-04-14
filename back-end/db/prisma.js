@@ -122,6 +122,11 @@ async function deletePost(postID) {
     })
 }
 
+async function findAllUsers() {
+    const users = await prisma.users.findMany();
+    return users
+}
+
 module.exports = {
     newUser,
     findUser,
@@ -134,5 +139,6 @@ module.exports = {
     editPost,
     editComment,
     deletePost,
-    deleteComment
+    deleteComment,
+    findAllUsers
 }

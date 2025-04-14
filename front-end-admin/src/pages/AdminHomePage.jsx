@@ -4,6 +4,8 @@ import AdminLoginForm from "../components/AdminLoginForm"
 
 export default function AdminHomePage() {
 
+    console.log(localStorage)
+
     const positionStyle = {
         display: "flex", 
         flexDirection: "column", 
@@ -24,7 +26,6 @@ export default function AdminHomePage() {
     return (
         <section>
             <div style={positionStyle}>
-                <Text marginBottom="10px">{message}</Text>
                 <AdminLoginForm/>
             </div>
         </section>

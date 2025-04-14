@@ -1,8 +1,4 @@
 ------- TO DO ---------
-- Add sign-up form
-- Add new post button
-- Fine-tune the styling
-
 - Admin portal
 ------- DOING ---------
 
@@ -21,6 +17,10 @@
 - Add links so it goes to a post-specific page
 - Work out how to render post-specific pages
 - New comment functionality
+- Add sign-up form
+- Add new post button
+- Add profile page
+- Fine-tune the styling
 
 --- MISC LEARNINGS ---
 - Install vite at the start to avoid problems
@@ -28,6 +28,9 @@
 - Host backend and frontend on different ports (make sure to install cors on backend though)
 - Put fetch into useEffects so they don't run every re-render
 - onSubmit only takes (e) as an arg. Pay attention to the colours in VSCode lol
+- If you render an object from a fetch request, make sure to put something in the interim while you wait.
+    - (if !user) return <div>Loading...</div> for example)
+    - This avoids type errors / running into undefined objects
 
 --- Reminders for when it's tough ---
 - First time using Axios

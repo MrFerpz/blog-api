@@ -1,17 +1,16 @@
 import axios from "axios";
-import { Field } from "@chakra-ui/react";
+import { Field, Input, Button } from "@chakra-ui/react";
 import { PasswordInput } from "../../../front-end-user/src/components/ui/password-input";
-import { useNavigate } from "react-router-dom";
 
 export default function AdminLoginForm() {
-    const navigate = useNavigate();
 
-    async function adminLogin() {
+    async function adminLogin(e) {
+        e.preventDefault();
         const username = document.querySelector("#username").value;
         const password = document.querySelector("#password").value;
 
         try {
-            const data = await axios.post("http://localhost:3000/api/admin/login", {
+            const userData = await axios.post("http://localhost:3000/api/admin/login", {
                     username: username,
                     password: password
                 }, {
@@ -20,9 +19,11 @@ export default function AdminLoginForm() {
                 }
             });
 
-            localStorage.setItem('token', data.data);
-            navigate("/admin/home")
+            console.log(userData.data);
 
+            localStorage.setItem('token', userData.data.data);
+            console.log(localStorage);
+            window.location.reload();
         } catch (err) {
             console.log(err)
         }
@@ -31,9 +32,9 @@ export default function AdminLoginForm() {
     return (
         <form onSubmit={adminLogin}>
             <Field.Root>
-                <Field.Label for="username">Username</Field.Label>
+                <Field.Label htmlFor="username">Username</Field.Label>
                 <Input id="username"></Input>
-                <Field.Label for="password">Password</Field.Label>
+                <Field.Label htmlFor="password">Password</Field.Label>
                 <PasswordInput id="password"></PasswordInput>
                 <Button type="submit">Log in</Button>
             </Field.Root>

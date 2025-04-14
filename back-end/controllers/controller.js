@@ -86,10 +86,15 @@ function userDetails(req, res) {
     return user
 }
 
+function userDetailsJson(req, res) {
+    const user = userDetails(req, res);
+    res.json(user);
+}
+
 function checkAdmin(req, res, next) {
-    const user  = userDetails(req, res)
-    console.log(user);
-    if (user.data.user.isAdmin == true) {
+    const user = userDetails(req, res)
+    console.log(user + "HEEEY")
+    if (user.isAdmin == true) {
         next()
     }
     else res.status(401).send("You do not have admin rights to view this page.")
@@ -125,7 +130,7 @@ async function verifyPassword(username, password) {
         return
     }
 
-    console.log("Successfully logged in.")
+    console.log("Login details verified.")
     return user
 }
 
@@ -220,6 +225,40 @@ async function commentDelete(req, res) {
     await prisma.deleteComment(commentID)
 }
 
+async function getAllUsers(req, res) {
+    const users = await prisma.getAllUsers();
+    res.json(users);
+}
+
+async function adminLoginPost(req, res) {
+    const user = await verifyPassword(req.body.username, req.body.password);
+    if (!user.isAdmin) {
+        res.status(401).send("Not an admin.");
+    }
+    else {
+        // remove password
+    const payload = { 
+        id: user.id,
+        created_at: user.created_at,
+        username: user.username,
+        isAdmin: user.isAdmin,
+        isAuthor: user.isAuthor
+    }
+
+    const token = jwt.sign({
+                        data: payload}, 
+                        "megasecretkey",
+                        {expiresIn: 60 * 60}
+                    )
+
+        req.token = token;
+            res.json({
+                message: "Successfully logged in as admin!",
+                data: token
+            });
+        }
+    }
+
 module.exports = {
     loginGet,
     signupGet,
@@ -239,5 +278,8 @@ module.exports = {
     postPut,
     commentPut,
     postDelete,
-    commentDelete
+    commentDelete,
+    userDetailsJson,
+    getAllUsers,
+    adminLoginPost
 }
