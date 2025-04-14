@@ -17,7 +17,7 @@ const Header = () => {
         <HStack spacing={4}>
           <Link to="/"><Button size="lg" variant="solid" colorPalette="blue">Home</Button></Link>
           <Link to="/posts"><Button size="lg"variant="solid" colorPalette="blue">Posts</Button></Link>
-          <Button size="lg" variant="solid" colorPalette="blue">Profile</Button>
+          <Link to="/profile"><Button size="lg" variant="solid" colorPalette="blue">Profile</Button></Link>
           {localStorage.token ?
           <Button onClick={logOut} size="lg" variant="solid" colorPalette="blue">Log out</Button> 
           : // if not logged in show log-out button

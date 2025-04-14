@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import PostPage from './pages/PostPage';
 import NewPostPage from "./pages/NewPostPage";
+import ProfilePage from './pages/ProfilePage';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "../../src/components/ui/provider"
 import SignupPage from './pages/SignupPage';
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/signup" element={<SignupPage/>}/>
                         <Route path="/posts/:postID" element={<PostPage/>}/>
                         <Route path="/new-post" element={<NewPostPage/>}/>
+                        <Route path="/profile" element={<ProfilePage/>}/>
                     </Routes>
                 <Footer/>
             </Provider>
