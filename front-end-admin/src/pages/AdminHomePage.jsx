@@ -1,7 +1,18 @@
-import { Flex, Button, Box, Stack } from "@chakra-ui/react"
+import { Flex, Button, Text, Box, Stack } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
+import AdminLoginForm from "../components/AdminLoginForm"
 
 export default function AdminHomePage() {
+
+    const positionStyle = {
+        display: "flex", 
+        flexDirection: "column", 
+        justifyContent: "center",
+        alignItems: "center",
+        height: "calc(100vh)"
+    }
+
+    if (localStorage.token)
     return  (
             <Flex height="100vh" justifyContent="center" gap="50px" alignItems="center">
                 <Button _hover={{bg: 'blue.300', scale: "1.02"}} fontWeight="bolder" fontSize="1.2rem" p={12} bg="whiteAlpha.900"><Link to="/admin/users">Users</Link></Button>
@@ -9,4 +20,13 @@ export default function AdminHomePage() {
                 <Button _hover={{bg: 'blue.300', scale: "1.02"}} fontWeight="bolder" fontSize="1.2rem" p={12} bg="whiteAlpha.900"><Link to="/admin/comments">Comments</Link></Button>
             </Flex>
             )
+
+    return (
+        <section>
+            <div style={positionStyle}>
+                <Text marginBottom="10px">{message}</Text>
+                <AdminLoginForm/>
+            </div>
+        </section>
+    )
 }
