@@ -33,6 +33,7 @@ function HomePage() {
     if (localStorage.token) {
     return (
         <section>
+            <Text margin="10px" textAlign="center">{message}</Text>
             <StackSeparator h="20px"></StackSeparator>
             <Box p={10}>
             <Grid templateColumns="repeat(3, 1fr)" gap="6">
@@ -49,9 +50,14 @@ function HomePage() {
                         <GridItem key={index}>
                           <Skeleton bg="blue.950" height="125px"/>
                         </GridItem>
-                      ))};
+                      ))}
             </Grid>
             </Box>
+            <Flex justifyContent="center">
+                <Box p={4}>
+                    <Button marginBottom="80px"><Link to="new-post">Add new post</Link></Button>
+                </Box>
+            </Flex>
         </section>
     )}
 

@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer"
 import LoginPage from './pages/LoginPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import PostPage from './pages/PostPage';
+import NewPostPage from "./pages/NewPostPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "../../src/components/ui/provider"
 import SignupPage from './pages/SignupPage';
@@ -22,6 +23,7 @@ function App() {
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/signup" element={<SignupPage/>}/>
                         <Route path="/posts/:postID" element={<PostPage/>}/>
+                        <Route path="/new-post" element={<NewPostPage/>}/>
                     </Routes>
                 <Footer/>
             </Provider>

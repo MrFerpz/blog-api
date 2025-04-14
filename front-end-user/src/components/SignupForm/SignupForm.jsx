@@ -27,9 +27,9 @@ function SignupForm() {
 
             } catch(err) {
                 console.log(err);
-                navigate("/login", { state: { message: err}});
+                navigate("/login", { state: { message: "Dang, couldn't sign up this time. Please try again later."}});
             }
-            navigate("/login", {state: {message: "You have successfully signed up!"}});
+            navigate("/login", {state: { message: "You have successfully signed up!"}});
     }
 
     return (
