@@ -40,7 +40,7 @@ return (
     <div>
         <Box shadow="md" p={6} bg="blackAlpha.900">
             <Stack p={3}><Heading>{post.title}</Heading></Stack>
-            <Stack><Text fontSize="x-small">{post.created_at}</Text></Stack>
+            <Stack marginLeft="12px"><Text fontSize="x-small">{post.created_at}</Text></Stack>
             <Stack p={3}>{post.content}</Stack>
             <Separator h="20px"></Separator>
             <Stack>Comments</Stack>
