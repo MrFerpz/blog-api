@@ -1,0 +1,58 @@
+import axios from "axios"
+import { useState, useEffect } from "react"
+import { Flex, Table, Button, TableBody } from "@chakra-ui/react"
+
+export default function AdminUsersPage() {
+    const [usersList, setUsersList] = useState([]);
+
+    useEffect(() => {
+        getUsers();
+    },[])
+
+    async function getUsers() {
+    try {
+        const users = await axios.get("http://localhost:3000/api/admin/users", {
+            headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + localStorage.token
+        }});
+
+        setUsersList(users.data);
+
+    } catch(err) {
+        console.log(err)
+    }}
+
+    if (!usersList) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+
+    return (
+        <Table.Root size="md">
+                    <TableBody>
+                        <Table.Row>
+                            <Table.ColumnHeader>User ID</Table.ColumnHeader>
+                            <Table.ColumnHeader>Username</Table.ColumnHeader>
+                            <Table.ColumnHeader>Account created at</Table.ColumnHeader>
+                            <Table.ColumnHeader>Author status</Table.ColumnHeader>
+                            <Table.ColumnHeader>Admin status</Table.ColumnHeader>
+                            <Table.ColumnHeader>Delete?</Table.ColumnHeader>
+                            <Table.ColumnHeader>Edit?</Table.ColumnHeader>
+                        </Table.Row>
+                        {usersList.map(user => {
+                            <Table.Row key={user.id}>
+                                <Table.Cell>{user.id}</Table.Cell>
+                                <Table.Cell>{user.username}</Table.Cell>
+                                <Table.Cell>{user.created_at}</Table.Cell>
+                                <Table.Cell>{user.isAuthor.toString()}</Table.Cell>
+                                <Table.Cell>{user.isAdmin.toString()}</Table.Cell>
+                                <Table.Cell><Button bg="red.800">Delete User</Button></Table.Cell>
+                                <Table.Cell><Button bg="green.800">Edit User</Button></Table.Cell>
+                            </Table.Row>
+                        })}
+                    </TableBody>
+                </Table.Root>
+    )
+}
