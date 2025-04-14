@@ -29,9 +29,10 @@ router.delete("/api/posts/:postID/:commentID", controller.checkCommentAuthor, co
 // // admin portal
 router.post("/api/admin-application/:userID", controller.makeAdmin)
 router.get("/api/admin", controller.checkAdmin, controller.adminPortalGet)
-router.get("/api/admin/posts", controller.checkAdmin, controller.adminPostPageGet);
+router.get("/api/admin/posts", controller.checkAdmin, controller.postPageGet);
 router.get("/api/admin/users", controller.checkAdmin, controller.getAllUsers);
 router.delete("/api/admin/users/:userID", controller.deleteUser);
+router.delete("/api/admin/comments/:commentID", controller.commentDelete)
 // router.post("/admin/posts", controller.adminPostPagePost);
 // router.get("/admin/posts/:postID", controller.adminPostGet);
 // router.put("/admin/posts/:postID", controller.adminPostPut);

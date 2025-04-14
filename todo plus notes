@@ -1,5 +1,8 @@
 ------- TO DO ---------
 - Admin portal
+    - Make users table but for posts & comments
+    - Currently impossible to delete authors because of their involvement in other databases(posts, comments)
+    - Clean up page refresh logic with useEffects
 ------- DOING ---------
 
 ------- DONE ---------

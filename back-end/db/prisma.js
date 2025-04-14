@@ -74,7 +74,11 @@ async function makeAdmin(userID) {
 }
 
 async function findAllPosts() {
-    const allPosts = await prisma.posts.findMany()
+    const allPosts = await prisma.posts.findMany({
+        include: {
+            Comments: true
+        }
+    })
     return allPosts;
 }
 
