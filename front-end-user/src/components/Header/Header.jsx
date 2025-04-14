@@ -7,7 +7,7 @@ const Header = () => {
   
   function logOut() {
     localStorage.clear();
-    navigate("/home");
+    navigate("/home", {state: {message: "Successfully logged out."}});
   }
 
   return (
@@ -19,7 +19,7 @@ const Header = () => {
           <Link to="/posts"><Button size="lg"variant="solid" colorPalette="blue">Posts</Button></Link>
           <Button size="lg" variant="solid" colorPalette="blue">Profile</Button>
           {localStorage.token ?
-          <Link to="/logout"><Button onClick={logOut} size="lg" variant="solid" colorPalette="blue">Log out</Button></Link> 
+          <Button onClick={logOut} size="lg" variant="solid" colorPalette="blue">Log out</Button> 
           : // if not logged in show log-out button
           <Link to="/login"><Button size="lg" variant="solid" colorPalette="blue">Log in</Button></Link>
           }

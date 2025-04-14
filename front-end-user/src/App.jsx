@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage.jsx';
 import PostPage from './pages/PostPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "../../src/components/ui/provider"
+import SignupPage from './pages/SignupPage';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                         <Route path="/posts" element={<HomePage/>}/>
                         <Route path="/home" element={<HomePage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/signup" element={<SignupPage/>}/>
                         <Route path="/posts/:postID" element={<PostPage/>}/>
                     </Routes>
                 <Footer/>

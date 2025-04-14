@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Box, Text, Grid, GridItem, Flex, Heading, HStack, Button, Skeleton, Separator, StackSeparator } from '@chakra-ui/react';
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom"
 import LoginPage from "./LoginPage";
 
 function HomePage() {
@@ -9,6 +9,8 @@ function HomePage() {
     const [posts, setPosts] = useState([])
     const [token, setToken] = useState(localStorage.token);
     const navigate = useNavigate();
+    const location = useLocation();
+    const message = location.state?.message;
 
     async function postsGet() {
         const postsList = await axios.get("http://localhost:3000/api/posts",
@@ -36,8 +38,8 @@ function HomePage() {
             <Grid templateColumns="repeat(3, 1fr)" gap="6">
                 {isLoaded ? (
                 posts.map(post => 
-                    <Link to={`/posts/${post.id}`}>
-                        <GridItem _hover={{bg: "blue.800", transform: "scale(1.02)"}} backgroundColor="blackAlpha.800" key={post.id} p={7} variant="surface" borderRadius="md">
+                    <Link key={post.id} to={`/posts/${post.id}`}>
+                        <GridItem _hover={{bg: "blue.800", transform: "scale(1.02)"}} backgroundColor="blackAlpha.800" p={7} variant="surface" borderRadius="md">
                             <Text fontWeight="bold" fontSize="xl">{post.title}</Text>
                             <Separator h="15px"></Separator>
                             <Text>{post.content}</Text>
@@ -54,14 +56,13 @@ function HomePage() {
     )}
 
     else {
-        return (
-            <Flex height="80%" width="100%" justifyContent="center" alignItems="center">
-                <Box bg="blackAlpha.950" p={8} borderRadius="md">
-                    <Text>It looks like you're not logged in...</Text>
-                    <Link to="/login"><Text fontSize="xl" color="blue.300">Click here to login.</Text></Link>
-                </Box>
-            </Flex>
-        )
+                <Flex height="80%" width="100%" flexDirection="column" justifyContent="center" alignItems="center">
+                    <Text marginBottom="10px">{message}</Text>
+                    <Box bg="blackAlpha.950" p={8} borderRadius="md">
+                        <Text>It looks like you're not logged in...</Text>
+                        <Link to="/login"><Text fontSize="xl" color="blue.300">Click here to login.</Text></Link>
+                    </Box>
+                </Flex>
     }
 }
 
