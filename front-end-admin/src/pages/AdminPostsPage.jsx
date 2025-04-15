@@ -4,9 +4,7 @@ import { Flex, Table, Button, TableBody, StackSeparator, Text, Separator, TableC
 import { Link, useNavigate } from "react-router-dom"
 
 export default function AdminPostsPage() {
-    const navigate = useNavigate();
     const [postsList, setPostsList] = useState([]);
-    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         getPosts();

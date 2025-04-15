@@ -10,6 +10,10 @@ export default function AdminUsersPage() {
         getUsers();
     },[])
 
+    useEffect(() => {
+        getUsers();
+    },[usersList])
+
     async function getUsers() {
     try {
         const users = await axios.get("http://localhost:3000/api/admin/users", {
@@ -37,7 +41,7 @@ export default function AdminUsersPage() {
                 'Authorization': 'Bearer ' + localStorage.token
             }});
 
-        window.location.href = window.location.href;
+        getUsers();
     }
 
     return (
