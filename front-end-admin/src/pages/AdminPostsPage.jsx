@@ -6,10 +6,15 @@ import { Link, useNavigate } from "react-router-dom"
 export default function AdminPostsPage() {
     const navigate = useNavigate();
     const [postsList, setPostsList] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         getPosts();
     },[])
+
+    useEffect(() => {
+        getPosts();
+    },[postsList])
 
     async function getPosts() {
     try {
@@ -37,8 +42,7 @@ export default function AdminPostsPage() {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.token
             }});
-
-        navigate("/admin/posts");
+        getPosts();
     }
 
     async function deleteComment(id) {
@@ -47,13 +51,12 @@ export default function AdminPostsPage() {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer' + localStorage.token
             }});
-
-            navigate("/admin/posts");
-        }
+        getPosts();
+    }
 
     return (
-        <Flex flexDirection="column" justifyContent="center" alignItems="center" height="100vh">
-            <Table.Root marginTop="390px" size="md">
+        <Flex flexDirection="column" justifyContent="center" alignItems="center">
+            <Table.Root marginTop="20px" size="md">
                 <TableBody>
                     <Table.Row>
                         <Table.ColumnHeader>Post ID</Table.ColumnHeader>

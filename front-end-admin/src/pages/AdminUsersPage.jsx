@@ -51,7 +51,6 @@ export default function AdminUsersPage() {
                         <Table.ColumnHeader>Author status</Table.ColumnHeader>
                         <Table.ColumnHeader>Admin status</Table.ColumnHeader>
                         <Table.ColumnHeader>Delete</Table.ColumnHeader>
-                        <Table.ColumnHeader>Edit</Table.ColumnHeader>
                     </Table.Row>
                     {usersList.map(user => 
                         <Table.Row key={user.id}>
@@ -61,7 +60,6 @@ export default function AdminUsersPage() {
                             <Table.Cell>{user.isAuthor.toString()}</Table.Cell>
                             <Table.Cell>{user.isAdmin.toString()}</Table.Cell>
                             <Table.Cell><Button id={user.id} onClick={(e) => deleteUser(user.id)} color="white" bg="red.800">Delete User</Button></Table.Cell>
-                            <Table.Cell><Button color="white" bg="green.800">Edit User</Button></Table.Cell>
                         </Table.Row>
                     )}
                 </TableBody>
